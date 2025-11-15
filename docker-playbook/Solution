@@ -13,7 +13,6 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.8/dist-packages/scapy/arch/linux.py", line 152, in set_promisc
     s.setsockopt(SOL_PACKET, cmd, mreq)
 OSError: [Errno 92] Protocol not available
-
 [Solution]
 Add this line on Python code --->>> conf.sniff_promisc = False
 
@@ -24,3 +23,10 @@ docker compose down
 docker system prune -f
 docker network prune -f
 docker compose up -d
+
+### can't run 'TCPDUMP' in seed. . . ###
+[Problem]
+root@67391f688d42:/# tcpdump
+tcpdump: eth0: SIOCETHTOOL(ETHTOOL_GLINK) ioctl failed: Function not implemented
+[Solution]
+??
