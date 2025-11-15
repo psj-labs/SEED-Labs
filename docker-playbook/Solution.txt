@@ -1,0 +1,10 @@
+### How to resolve the ‘Errno 92 / SOL_PACKET / set_promisc’ error ###
+
+conf.sniff_promisc = False
+
+### docker-restart. ####
+
+docker compose down
+docker system prune -f
+docker network prune -f
+docker compose up -d
