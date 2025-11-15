@@ -1,7 +1,7 @@
 ### How to resolve the ‘Errno 92 / SOL_PACKET / set_promisc error ###
 
-root@309afb5312ee:/# python3 test.py  
-
+[Problem] 
+root@309afb55g2ee:/# python3 test.py  
 SENDING ICMP PACKET.........
 Traceback (most recent call last):
   File "test.py", line 14, in <module>
@@ -14,6 +14,7 @@ Traceback (most recent call last):
     s.setsockopt(SOL_PACKET, cmd, mreq)
 OSError: [Errno 92] Protocol not available
 
+[Solution]
 Add this line on Python code --->>> conf.sniff_promisc = False
 
 
