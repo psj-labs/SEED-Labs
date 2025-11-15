@@ -1,8 +1,23 @@
-### How to resolve the ‘Errno 92 / SOL_PACKET / set_promisc’ error ###
+### How to resolve the ‘Errno 92 / SOL_PACKET / set_promisc error ###
 
-conf.sniff_promisc = False
+root@309afb5312ee:/# python3 test.py  
 
-### docker-restart. ####
+SENDING ICMP PACKET.........
+Traceback (most recent call last):
+  File "test.py", line 14, in <module>
+    h = sr1(a/b, timeout=2, verbose=0)
+  File "/usr/local/lib/python3.8/dist-packages/scapy/sendrecv.py", line 536, in sr1
+    s = conf.L3socket(promisc=promisc, filter=filter,
+  File "/usr/local/lib/python3.8/dist-packages/scapy/arch/linux.py", line 411, in __init__
+    set_promisc(self.ins, self.iface)
+  File "/usr/local/lib/python3.8/dist-packages/scapy/arch/linux.py", line 152, in set_promisc
+    s.setsockopt(SOL_PACKET, cmd, mreq)
+OSError: [Errno 92] Protocol not available
+
+Add this line on Python code --->>> conf.sniff_promisc = False
+
+
+### docker-restart command ####
 
 docker compose down
 docker system prune -f
