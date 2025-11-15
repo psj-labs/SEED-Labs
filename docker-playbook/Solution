@@ -17,7 +17,7 @@ OSError: [Errno 92] Protocol not available
 Add this line on Python code --->>> conf.sniff_promisc = False
 
 
-### docker-restart command ####
+### docker-restart command ###
 
 docker compose down
 docker system prune -f
@@ -29,4 +29,30 @@ docker compose up -d
 root@67391f688d42:/# tcpdump
 tcpdump: eth0: SIOCETHTOOL(ETHTOOL_GLINK) ioctl failed: Function not implemented
 [Solution]
-??
+"tcpdump -n -i en0(ex)" (#10.9.0.0)
+1) # ifconfig (not container)
+=> ""br-8a1431d80f2c"": flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.9.0.1  netmask 255.255.255.0  broadcast 10.9.0.255
+        inet6 fe80::d49f:49ff:fee8:1b60  prefixlen 64  scopeid 0x20<link>
+        ether d6:9f:49:e8:1b:60  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+br-d7247dea6eb7: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.60.1  netmask 255.255.255.0  broadcast 192.168.60.255
+        inet6 fe80::d09c:41ff:fefe:e24f  prefixlen 64  scopeid 0x20<link>
+        ether d2:9c:41:fe:e2:4f  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+2) change the name en0 to br-8a1431d80f2c
+3) # tcpdump -i br-8a1431d80f2c -n
+=>  tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+    listening on br-8a1431d80f2c, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+    23:27:18.629813 ARP, Request who-has 10.9.0.1 tell 10.9.0.105, length 28
+    23:27:18.629841 ARP, Reply 10.9.0.1 is-at d6:9f:49:e8:1b:60, length 28
+
